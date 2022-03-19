@@ -16,6 +16,18 @@ int rezRad(int nb, int num) {
     return i-1;
 }
 
+int getSize(char s[]) {
+    int i=0;
+    int n=strlen(s);
+    int size=1;
+    while(i<n) {
+        if(s[i]==' ')
+            size++;
+        i++;
+    }
+    return size;
+}
+
 int main()
 {
     //pb1
@@ -58,6 +70,7 @@ int main()
         c=fgetc(fp);
     }
     */
+
     //pb3
     /*
     FILE *fp;
@@ -81,6 +94,7 @@ int main()
         c=fgetc(fp);
     }
     */
+
     //pb4
     //aproximativ corecta, ultimele zecimale sunt gresite
     //probabil am gresit ceva la variabila "adaos" intrucat nu stiu algoritmul, dar nu pot sa zic sigur
@@ -134,5 +148,78 @@ int main()
         i++;
     }
     printf("\n");
+    */
+
+    //pb5
+    /*
+    char s[50];
+    FILE* fp=fopen("/home/rotaru/POO-2022/input.txt","r");
+    fgets(s,50,fp);
+    int m1=getSize(s);
+    int n1=0;
+    while(s[0]!='\n') {
+        n1++;
+        fgets(s,50,fp);
+    }
+    fgets(s,50,fp);
+    int m2=getSize(s);
+    int n2=0;
+    while(!feof(fp)) {
+        n2++;
+        fgets(s,50,fp);
+    }
+    fclose(fp);
+    fp=fopen("/home/rotaru/POO-2022/input.txt","r");
+    int a[n1][m1];
+    int b[n2][m2];
+    int c[n1][m2];
+    int i=0,j=0,k=0,num=0;
+    fscanf(fp,"%d", &num);
+    a[0][0]=num;
+    j=1;
+    while(i<n1) {
+        while(j<m1) {
+            fscanf(fp,"%d",&num);
+            a[i][j]=num;
+            j++;
+        }
+        i++;
+        j=0;
+    }
+    i=0;
+    while(i<n2) {
+        j=0;
+        while(j<m2) {
+            fscanf(fp,"%d",&num);
+            b[i][j]=num;
+            j++;
+        }
+        i++;
+    }
+    fclose(fp);
+    i=0;
+    while(i<n1) {
+        j=0;
+        while(j<m2) {
+            c[i][j]=0;
+            k=0;
+            while(k<n2) {
+                c[i][j]+=a[i][k]*b[k][j];
+                k++;
+            }
+            j++;
+        }
+        i++;
+    }
+    i=0;
+    while(i<n1) {
+        j=0;
+        while(j<m2) {
+            printf("%d ",c[i][j]);
+            j++;
+        }
+        printf("\n");
+        i++;
+    }
     */
 }
