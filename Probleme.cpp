@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <stdbool.h>
 
 const char a[]="abcdefghijklmnopqrstuvwxyz";
 
@@ -28,6 +29,110 @@ int getSize(char s[]) {
     return size;
 }
 
+void toString(char s[], int num) {
+    bool negativ=0;
+    if(num<0) {
+        negativ=1;
+        num=-num;
+    }
+    int i=0,n;
+    char c;
+    while(num) {
+        s[i]=num%10+'0';
+        num/=10;
+        i++;
+    }
+    n=strlen(s);
+    i=0;
+    while(i<n/2) {
+        c=s[i];
+        s[i]=s[n-i-1];
+        s[n-i-1]=c;
+        i++;
+    }
+    char s2[50]="-";
+    if(negativ) {
+        strcat(s2,s);
+        strcpy(s,s2);
+    }
+}
+
+void funcOp(char c1, char c2, char s[]) {
+    bool ok=1;
+    char zero[]={'\0'};
+    int n,i,j,k,p,n1,n2,n3;
+    while(ok) {
+        ok=0;
+        n=strlen(s);
+        i=1;
+        while(i<n) {
+            if(s[i]==c1 || s[i]==c2) {
+                j=i-1;
+                p=1;
+                n1=0;
+                n2=0;
+                while((s[j]>47 && s[j]<58) || s[j]=='-') {
+                    n1=n1+p*(s[j]-48);
+                    p*=10;
+                    j--;
+                    if(s[j]=='-') {
+                        n1=-n1;
+                        break;
+                    }
+                }
+                j++;
+                k=i+1;
+                while(s[k]>47 && s[k]<58) {
+                    n2=n2*10+s[k]-48;
+                    k++;
+                }
+                k--;
+                switch(s[i]) {
+                    case '*':
+                        n3=n1*n2;
+                        break;
+                    case '/':
+                        n3=n1/n2;
+                        break;
+                    case '+':
+                        n3=n1+n2;
+                        break;
+                    default:
+                        n3=n1-n2;
+                }
+                char s2[50]={'\0'};
+                char s3[50]={'\0'};
+                char s4[50]={'\0'};
+                toString(s3,n3);
+                strcpy(s4,s+k+1);
+                if(j)
+                    strncpy(s2,s,j);
+                if(strcmp(s2,"-"))
+                    strcpy(s,s2);
+                else strcpy(s,zero);
+                strcat(s,s3);
+                strcat(s,s4);
+                ok=1;
+                break;
+            }
+            i++;
+        }
+    }
+}
+
+void rezOp(char s[]) {
+    funcOp('*','/',s);
+    funcOp('+','-',s);
+    int i=0;
+    int n=strlen(s);
+    int num=0;
+    while(i<n) {
+        num=num*10+s[i]-48;
+        i++;
+    }
+    printf("\n%s\n",s);
+}
+
 int main()
 {
     //pb1
@@ -52,6 +157,7 @@ int main()
         r--;
     }
     */
+
     //pb2
     /*
     FILE *fp;
@@ -220,6 +326,15 @@ int main()
         }
         printf("\n");
         i++;
+    }
+    */
+
+    //pb6
+    /*
+    FILE *fp = fopen("/home/rotaru/POO-2022/input.txt","r");
+    char s[50];
+    while(fgets(s,50,fp)) {
+        rezOp(s);
     }
     */
 }
