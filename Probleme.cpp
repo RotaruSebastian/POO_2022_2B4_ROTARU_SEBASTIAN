@@ -133,6 +133,34 @@ void rezOp(char s[]) {
     printf("\n%s\n",s);
 }
 
+int numInt(int num) {
+    int n=0;
+label:
+    printf("\n%d\n",num);
+    while(num) {
+        n+=num%10;
+        num/=10;
+    }
+    if(n>9) {
+        num=n;
+        n=0;
+        goto label;
+    }
+    return n;
+}
+
+int numString(char s[]) {
+    int i=0;
+    int num=0;
+    int n=strlen(s);
+    while(i<n) {
+        num+=s[i]-48;
+        i++;
+    }
+    num+=38;
+    return numInt(num);
+}
+
 int main()
 {
     //pb1
@@ -335,6 +363,19 @@ int main()
     char s[50];
     while(fgets(s,50,fp)) {
         rezOp(s);
+    }
+    */
+
+    //pb7
+    /*
+    FILE *fp = fopen("/home/rotaru/POO-2022/input.txt","r");
+    char s[150];
+    int num=0;
+    fgets(s,150,fp);
+    while(!feof(fp)) {
+        num=numString(s);
+        printf("\n%d\n",num);
+        fgets(s,150,fp);
     }
     */
 }
